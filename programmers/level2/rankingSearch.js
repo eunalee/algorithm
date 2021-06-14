@@ -16,49 +16,20 @@ var query = [
     "- and - and - and - 150"
 ];
 
-/*var info = [
-    "cpp backend junior chicken 10",
-    "java backend senior pizza 2000",
-    "python backend senior pizza 80",
-];
-
-var query = [
-    "java and backend and junior and pizza 100",
-    "python and frontend and senior and chicken 200",
-    "cpp and - and senior and pizza 250",
-    "- and backend and senior and - 150",
-    "- and - and - and chicken 100",
-    "- and - and - and - 150"
-];*/
-
-var query = [
-    "- and frontend and junior and - 10",
-    "java and - and - and pizza 5000",
-    "- and - and - and - 100"
-];
-
 solution(info, query);
 
 function solution(info, query) {
     var answer = [];
 
-    var infoData = [];
-    info.map(function(value) {
-        infoData.push(value.split(" "));
-    });
-
-    var queryData = [];
-    query.map(function(value) {
-        queryData.push(value.split(" "));
-    });
-
-    for(var i=0; i<queryData.length; i++) {
-        for(var j=0; j<queryData[i].length; j++) {
-            if(queryData[i][j] == 'and') {
-                queryData[i].splice(j, 1);
+    var infoData = info.map(value => value.split(" "));
+    var queryData = query.map(value => value.split(" "));
+    queryData.forEach(queries => {
+        queries.forEach((value, index) => {
+            if(value == 'and') {
+                queries.splice(index, 1);
             }
-        }
-    }
+        });
+    });
 
     var count = 0;
     var status = false;
@@ -93,3 +64,33 @@ function solution(info, query) {
 
     return answer;
 }
+
+/*
+var info = [
+    "cpp backend junior chicken 10",
+    "java backend senior pizza 2000",
+    "python backend senior pizza 80",
+];
+
+var query = [
+    "- and frontend and junior and - 10",
+    "java and - and - and pizza 5000",
+    "- and - and - and - 100"
+];
+
+var infoData = [];
+var infoData = info.map(function(value) {
+    infoData.push(value.split(" "));
+});
+var queryData = [];
+query.map(function(value) {
+    queryData.push(value.split(" "));
+});
+for(var i=0; i<queryData.length; i++) {
+    for(var j=0; j<queryData[i].length; j++) {
+        if(queryData[i][j] == 'and') {
+            queryData[i].splice(j, 1);
+        }
+    }
+}
+*/
