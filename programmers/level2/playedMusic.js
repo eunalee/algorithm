@@ -1,49 +1,39 @@
-let m = 'ABCDEFG';
+//let m = 'ABCDEFG';
 //let m = 'CC#BCC#BCC#BCC#B';
-//let m = 'ABC';
-let musicinfos = ['12:00,12:14,HELLO,CDEFGAB', '13:00,13:05,WORLD,ABCDEF'];
-//let musicinfos = ['12:59,13:00,HELLO,CDEFGAB', '13:00,13:14,WORLD,ABCDEF'];
+let m = 'ABC';
+//let musicinfos = ['12:00,12:14,HELLO,CDEFGAB', '13:00,13:05,WORLD,ABCDEF'];
+//let musicinfos = ['12:59,13:00,HELLO,CDEFGAB', '13:00,14:00,WORLD,ABCDEF'];
 //let musicinfos = ['03:00,03:30,FOO,CC#B', '04:00,04:08,BAR,CC#BCC#BCC#B'];
 //let musicinfos = ['12:00,12:14,HELLO,C#DEFGAB', '13:00,13:05,WORLD,ABCDEF'];
+let musicinfos = ['12:00,12:14,HELLO,CDEFGAB', '13:00,13:14,WORLD,ABCDEF'] ;
+//let musicinfos = ['12:00,12:14,HELLO,CDEFGAB', '13:00,13:05,WORLD,ABCDEF', '13:00,13:10,NO,ABCDEF', '12:00,12:18,YES,CDEFGAB', '12:00,12:14,HI,CDEFGAB'];
 
 solution(m, musicinfos);
 
 function solution(m, musicinfos) {
     var answer = '';
 
-    const musicInfo = musicinfos.map(value => value.split(','));
-
-    const playTime = new Array();   // 재생시간 정보
-    const songsInfo = new Array();   // 곡 정보
-    const playCodes = new Array();  // 재생시간 동안의 악보코드 정보
-    musicInfo.forEach(value => {
-        let minute = getPlayTime(value[0], value[1]);
-        playTime.push(minute);
-        playCodes.push(getPlayCode(minute, value[3]));
-        songsInfo.push(value[2]);
-    });
-   
+    let maxTime = 0;
     m = replaceCode(m);     // 기억한 멜로디 코드 치환
+    
+    const musicInfo = musicinfos.map(value => value.split(','));
+    musicInfo.forEach(value => {
+        const playTime = getPlayTime(value[0], value[1]);   // 재생시간
+        const playCodes = getPlayCode(playTime, value[3]);  // 악보코드
 
-    const songs = new Array();      // 조건과 일치하는 곡
-    playCodes.forEach((value, index) => {
         // 기억한 멜로디 코드가 재생한 곡 악보코드에 포함되어 있는지 확인
-        const regex = new RegExp(m);
-        if(regex.test(value)) {
-            songs.push(songsInfo[index]);
+        if(playCodes.includes(m)) {
+            if(playTime > maxTime) {
+                // 1. 재생시간이 제일 긴 음악 제목 반환
+                // 2. 재생된 시간도 같을 경우 먼저 입력된 음악 제목 반환
+                answer = value[2];
+                maxTime = playTime;
+            }
         }
     });
 
-    if(songs.length > 1) {
-        // 조건이 일치하는 음악이 여러 개일 때
-        // 1. 재생시간이 제일 긴 음악 제목 반환
-        // 2. 재생된 시간도 같을 경우 먼저 입력된 음악 제목 반환
-        const maxTime = Math.max.apply(null, playTime);
-        answer = songs[playTime.indexOf(maxTime)];
-    } else if(songs.length == 1) {
-        answer = songs[0];
-    } else {
-        // 조건이 일치하는 음악이 없을 때
+    // 조건이 일치하는 음악이 없을 때
+    if(answer == '') {
         answer = '(None)';
     }
 
@@ -68,14 +58,11 @@ function getPlayTime(start, end) {
     const endTime = end.split(':');
     
     // 재생시간(밀리초)
-    //const duration = new Date(0, 0, 1, endTime[0], endTime[1]).getTime() - new Date(0, 0, 1, startTime[0], startTime[1]).getTime();
-    const duration = new Date(0, 0, 0, endTime[0], endTime[1]).getTime() - new Date(0, 0, 0, startTime[0], startTime[1]).getTime();
-    /*const hour = endTime[0] - startTime[0];
+    const hour = endTime[0] - startTime[0];
     const minute = endTime[1] - startTime[1];
-    const playTime = (hour * 60) + minute;*/
+    const time = (hour * 60) + minute;
 
     // 밀리초 -> 분 으로 변환
-    const time = duration / (1000*60) ;
 
     return time;
 }
