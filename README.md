@@ -8,3 +8,4 @@
 **Level 2**
   * [순위 검색](https://programmers.co.kr/learn/courses/30/lessons/72412)
   * [방금그곡](https://programmers.co.kr/learn/courses/30/lessons/17683)
+  * [오픈채팅방](https://programmers.co.kr/learn/courses/30/lessons/42888)
