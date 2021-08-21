@@ -6,50 +6,27 @@ solution(record);
 
 function solution(record) {
     var answer = [];
-    let chat = new Array();
-
-    const chatInfo = record.map(value => value.split(' '));
-    chatInfo.forEach(records => {
-        let flag = false;
-        if(chat.length > 0) {
-            chat.forEach(value => {
-                if(records[0] == 'Enter') {
-                    if(value.id == records[1]) {          // 유저 아이디가 이미 존재하는 경우
-                        value.nickname = records[2];
-                    } else {
-                        flag = true;
-                    }
-                } else if(records[0] == 'Leave') {
-                    flag = false;
-                    if(value.id == records[1]) {
-                        chat.push({
-                            id: records[1],
-                            nickname : value.nickname,
-                            message :'님이 나갔습니다.'
-                        });
-                    }
-                } else {
-                    flag = false;
-                    if(value.id == records[1]) {
-                        value.nickname = records[2];
-                    }
-                }
-            });
-        } else {
-            flag = true;
-        }
-
-        // 유저 아이디가 없는 경우
-        if(flag) {
-            chat.push({
-                id: records[1],
-                nickname : records[2],
-                message :'님이 들어왔습니다.'
-            });
-        }
+    const chatLogs = record.map(value => value.split(' '));
+    
+    // 최종 닉네임 정보 셋팅
+    let userInfo = {};
+    chatLogs.forEach(value => {
+       if(value.length == 3) {
+           userInfo[value[1]] = value[2];
+       }
     });
 
-    answer = chat.map(value => value.nickname + value.message);
+    // 채팅방 로그 남기기
+    chatLogs.forEach(value => {
+        let action = value[0];
+        let uid = value[1];
+
+        if(action == 'Enter') {
+            answer.push(userInfo[uid] + '님이 들어왔습니다.');
+        } else if(action == 'Leave') {
+            answer.push(userInfo[uid] + '님이 나갔습니다.');
+        }
+     });
 
     return answer;
 }
