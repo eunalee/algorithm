@@ -1,11 +1,11 @@
-//let m = 'ABCDEFG';
+let m = 'ABCDEFG';
 //let m = 'CC#BCC#BCC#BCC#B';
-let m = 'ABC';
-//let musicinfos = ['12:00,12:14,HELLO,CDEFGAB', '13:00,13:05,WORLD,ABCDEF'];
+//let m = 'ABC';
+let musicinfos = ['12:00,12:14,HELLO,CDEFGAB', '13:00,13:05,WORLD,ABCDEF'];
 //let musicinfos = ['12:59,13:00,HELLO,CDEFGAB', '13:00,14:00,WORLD,ABCDEF'];
 //let musicinfos = ['03:00,03:30,FOO,CC#B', '04:00,04:08,BAR,CC#BCC#BCC#B'];
 //let musicinfos = ['12:00,12:14,HELLO,C#DEFGAB', '13:00,13:05,WORLD,ABCDEF'];
-let musicinfos = ['12:00,12:14,HELLO,CDEFGAB', '13:00,13:14,WORLD,ABCDEF'] ;
+//let musicinfos = ['12:00,12:14,HELLO,CDEFGAB', '13:00,13:14,WORLD,ABCDEF'] ;
 //let musicinfos = ['12:00,12:14,HELLO,CDEFGAB', '13:00,13:05,WORLD,ABCDEF', '13:00,13:10,NO,ABCDEF', '12:00,12:18,YES,CDEFGAB', '12:00,12:14,HI,CDEFGAB'];
 
 solution(m, musicinfos);
@@ -53,16 +53,13 @@ function replaceCode(codesInfo) {
 }
 
 function getPlayTime(start, end) {
-    // 시작, 끝난 시각
     const startTime = start.split(':');
     const endTime = end.split(':');
     
-    // 재생시간(밀리초)
+    // 재생시간(분)
     const hour = endTime[0] - startTime[0];
     const minute = endTime[1] - startTime[1];
     const time = (hour * 60) + minute;
-
-    // 밀리초 -> 분 으로 변환
 
     return time;
 }
