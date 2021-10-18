@@ -12,42 +12,16 @@ solution(lottos, win_nums);
 
 function solution(lottos, win_nums) {
     var answer = [];
-
+    let ranking = [6, 6, 5, 4, 3, 2, 1];
+    
     // lottos 에서 당첨된 숫자 갯수
-    let winningCnt = lottos.filter(value => win_nums.includes(value)).length;
-
-    // 0 의 갯수
-    let zeroCnt = lottos.filter(value => 0 === value).length;
-
-    // 최고 순위 : 0 의 갯수 + 당첨된 숫자 갯수, 최저 순위 : 당첨된 숫자 갯수
-    answer.push(getRanking(winningCnt + zeroCnt), getRanking(winningCnt));
+    let minCount = lottos.filter(value => win_nums.includes(value)).length;
+    
+    // 0 의 갯수 + 당첨된 숫자 갯수
+    let maxCount = lottos.filter(value => 0 === value).length + minCount;
+    
+    // 최고 순위, 최저 순위
+    answer.push(ranking[maxCount], ranking[minCount]);
 
     return answer;
-}
-
-// 로또 순위
-function getRanking(count) {
-    let ranking = 0;
-    switch (count) {
-        case 6:
-            ranking = 1;
-            break;
-        case 5:
-            ranking = 2;
-            break;
-        case 4:
-            ranking = 3;
-            break;
-        case 3:
-            ranking = 4;
-            break;
-        case 2:
-            ranking = 5;
-            break;
-        default:
-            ranking = 6;
-            break;
-    }
-
-    return ranking;
 }
