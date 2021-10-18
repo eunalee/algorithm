@@ -7,17 +7,17 @@ let s = 'one4seveneight';
 solution(s);
 
 function solution(s) {
-  // 정규식으로 문자열 교체
-  s = s.replace(/zero/gi, 0)
-  .replace(/one/gi, 1)
-  .replace(/two/gi, 2)
-  .replace(/three/gi, 3)
-  .replace(/four/gi, 4)
-  .replace(/five/gi, 5)
-  .replace(/six/gi, 6)
-  .replace(/seven/gi, 7)
-  .replace(/eight/gi, 8)
-  .replace(/nine/gi, 9);
-  
-  return Number(s);
+  let answer = s;
+  let replaceArr = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+
+  for (let i = 0; i < replaceArr.length; i++) {
+    // 영단어를 구분자로 하여 문자열 자르기
+    // 'one4seveneight' -> '', '4seveneight'
+    let arr = answer.split(replaceArr[i]);
+    // 영단어에 대응하는 숫자를 구분자로 하여 자른 문자열 합치기
+    // '14seveneight'
+    answer = arr.join(i);
+  }
+
+  return Number(answer);
 }
